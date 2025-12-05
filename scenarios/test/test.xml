@@ -2,10 +2,10 @@
 <root BTCPP_format="4">
   <BehaviorTree ID="space-simulator">
     <ReactiveSequence>
-      <CaptureCameraImage camera_topic="/sim/camera/color/image_raw"/>
+      <CaptureCameraImage camera_topic="/camera/color/image_raw"/>
       <DisplayYOLODetection/>
       <Sequence>
-        <IsDetectedSomething target_class="umbrella"
+        <IsDetectedSomething target_class="person"
                              confidence_threshold="0.5"/>
         <SendTelegramMessage message="사람이 감지되었습니다."
                              interval="5.0"/>
