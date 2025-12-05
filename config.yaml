@@ -1,0 +1,13 @@
+scenario: scenarios.test
+
+agent:
+  namespaces: "" 
+  behavior_tree_xml: "test.xml"
+
+bt_runner:
+  bt_tick_rate: 30.0 
+  bt_visualiser:
+    enabled: True       # Set to True to enable BT visualisation, False to disable
+    screen_width: 600 
+    screen_height: 600 
+  profiling_mode: False

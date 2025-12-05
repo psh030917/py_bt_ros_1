@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="space-simulator">
+    <ReactiveSequence>
+      <CaptureCameraImage camera_topic="/sim/camera/color/image_raw"/>
+      <DisplayYOLODetection/>
+      <Sequence>
+        <IsDetectedSomething target_class="umbrella"
+                             confidence_threshold="0.5"/>
+        <SendTelegramMessage message="사람이 감지되었습니다."
+                             interval="5.0"/>
+        <CaptureScreen/>
+      </Sequence>
+    </ReactiveSequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="CaptureCameraImage"
+            editable="true">
+      <input_port name="camera_topic"
+                  default="psh"/>
+    </Action>
+    <Action ID="CaptureScreen"
+            editable="true"/>
+    <Action ID="DisplayYOLODetection"
+            editable="true"/>
+    <Condition ID="IsDetectedSomething"
+               editable="true">
+      <input_port name="target_class"
+                  default="person"/>
+      <input_port name="confidence_threshold"
+                  default="0.5"/>
+    </Condition>
+    <Action ID="SendTelegramMessage"
+            editable="true">
+      <input_port name="message"
+                  default="사람이 감지되었습니다."/>
+      <input_port name="interval"
+                  default="3.0"/>
+    </Action>
+  </TreeNodesModel>
+
+</root>
