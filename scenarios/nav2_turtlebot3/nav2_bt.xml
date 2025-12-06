@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="space-simulator">
+    <Sequence>
+      <SaveInitialPose/>
+      <MoveToGoal/>
+      <CaptureImage/>
+      <Return/>
+    </Sequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="CaptureImage"
+            editable="true"/>
+    <Action ID="MoveToGoal"
+            editable="true"/>
+    <Action ID="Return"
+            editable="true"/>
+    <Condition ID="SaveInitialPose"
+               editable="true"/>
+  </TreeNodesModel>
+
+</root>

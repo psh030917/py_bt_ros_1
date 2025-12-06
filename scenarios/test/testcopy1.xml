@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="space-simulator">
+    <Sequence>
+      <SendTelegramMessage message="🔥🔥 화재 감지! 로봇이 즉시 정지합니다! 🔥🔥"
+                           interval="3.0"/>
+    </Sequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="SendTelegramMessage"
+            editable="true">
+      <input_port name="message"
+                  default="사람이 감지되었습니다."/>
+      <input_port name="interval"
+                  default="3.0"/>
+    </Action>
+  </TreeNodesModel>
+
+</root>

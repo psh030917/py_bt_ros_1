@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="space-simulator">
+    <ReactiveSequence>
+      <UpdateFireState fire_sensor_topic="/fire_sensor"
+                       flame_threshold="1"
+                       temp_threshold="600"/>
+      <IsFireDetected/>
+      <Sequence>
+        <StopRobot cmd_vel_topic="/cmd_vel"/>
+        <PlayLocalAlarm alarm_topic="/fire/alarm_cmd"/>
+        <SendTelegramMessage message="🔥🔥 화재 감지! 로봇이 즉시 정지합니다! 🔥🔥"
+                             interval="3.0"/>
+      </Sequence>
+    </ReactiveSequence>
+  </BehaviorTree>
+  
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="CaptureCameraImage"
+            editable="true">
+      <input_port name="camera_topic"
+                  default="psh"/>
+    </Action>
+    <Action ID="CaptureScreen"
+            editable="true"/>
+    <Action ID="DisplayYOLODetection"
+            editable="true"/>
+    <Condition ID="IsDetectedSomething"
+               editable="true">
+      <input_port name="target_class"
+                  default="person"/>
+      <input_port name="confidence_threshold"
+                  default="0.5"/>
+      <input_port name="cooldown_time"
+                  default="10.0"/>
+      <input_port name="iou_threshold"
+                  default="0.3"/>
+    </Condition>
+    <Action ID="SendTelegramMessage"
+            editable="true">
+      <input_port name="message"
+                  default="사람이 감지되었습니다."/>
+      <input_port name="interval"
+                  default="3.0"/>
+    </Action>
+    <Condition ID="IsObstacleDetected"
+               editable="true">
+      <input_port name="obstacle_topic"
+                  default="/depth_obstacles"/>
+    </Condition>
+    <Condition ID="IsNightMode"
+               editable="true">
+      <input_port name="patrol_mode_topic"
+                  default="/patrol_mode"/>
+      <input_port name="target_mode"
+                  default="NIGHT"/>
+    </Condition>
+  </TreeNodesModel>
+
+</root>

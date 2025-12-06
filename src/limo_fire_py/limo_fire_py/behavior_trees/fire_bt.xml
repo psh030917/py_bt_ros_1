@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4" main_tree_to_execute="FireMonitorTree">
+
+  <!-- Groot 팔레트에 표시될 노드들 -->
+  <TreeNodesModel>
+
+    <Action ID="UpdateFireState">
+      <description>
+        flame_raw, temp_raw 센서를 읽고 fire_detected, fire_level, temp 등의 블랙보드를 업데이트합니다.
+      </description>
+    </Action>
+
+    <Condition ID="IsFireDetected">
+      <description>
+        블랙보드의 fire_detected 값이 TRUE면 SUCCESS, 아니면 FAILURE를 반환합니다.
+      </description>
+    </Condition>
+
+    <Action ID="StopRobot">
+      <description>
+        /cmd_vel 0 또는 nav2 cancel 등을 사용하여 로봇을 정지시킵니다.
+      </description>
+    </Action>
+
+    <Action ID="PlayLocalAlarm">
+      <description>
+        /fire/alarm_cmd 토픽 publish 등으로 부저 또는 음성 안내를 실행합니다.
+      </description>
+    </Action>
+
+    <Action ID="SendTelegramAlert">
+      <description>
+        텔레그램 API를 호출해 관리자에게 화재 알림을 전송합니다.
+      </description>
+    </Action>
+
+  </TreeNodesModel>
+
+
+  <!-- 메인 행동트리 -->
+  <BehaviorTree ID="FireMonitorTree">
+
+    <!-- Reactively 반복적으로 상태 감시 + 실행 -->
+    <ReactiveSequence name="MonitorAndReact">
+
+      <!-- 1. 센서 상태 업데이트 -->
+      <UpdateFireState name="update_fire_state"/>
+
+      <!-- 2. 화재 감지 여부 체크 -->
+      <IsFireDetected name="check_fire"/>
+
+      <!-- 3. 화재 대응 절차 실행 -->
+      <Sequence name="HandleFire">
+
+        <StopRobot name="stop_robot"/>
+        <PlayLocalAlarm name="play_alarm"/>
+        <SendTelegramAlert name="telegram_alert"/>
+
+      </Sequence>
+
+    </ReactiveSequence>
+
+  </BehaviorTree>
+
+</root>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="space-simulator">
+    <ReactiveSequence>
+      <IsNightMode patrol_mode_topic="/patrol_mode"
+                   target_mode="NIGHT"/>
+      <SendTelegramMessage message="밤"
+                           interval="3.0"/>
+    </ReactiveSequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Condition ID="IsNightMode"
+               editable="true">
+      <input_port name="patrol_mode_topic"
+                  default="/patrol_mode"/>
+      <input_port name="target_mode"
+                  default="NIGHT"/>
+    </Condition>
+    <Action ID="SendTelegramMessage"
+            editable="true">
+      <input_port name="message"
+                  default="사람이 감지되었습니다."/>
+      <input_port name="interval"
+                  default="3.0"/>
+    </Action>
+  </TreeNodesModel>
+
+</root>
